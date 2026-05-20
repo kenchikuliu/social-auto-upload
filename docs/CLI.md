@@ -6,6 +6,7 @@
 - `kuaishou`
 - `xiaohongshu`
 - `bilibili`
+- `tencent`（视频号）
 
 实现说明：
 
@@ -32,6 +33,7 @@ sau douyin --help
 sau kuaishou --help
 sau xiaohongshu --help
 sau bilibili --help
+sau tencent --help
 ```
 
 ## 安装 patchright 浏览器
@@ -78,6 +80,17 @@ sau bilibili check --account <account_name>
 sau bilibili upload-video --account <account_name> --file videos/demo.mp4 --title "示例标题" --desc "示例简介" --tid 249 --tags 足球,测试
 ```
 
+## 视频号 CLI 子命令
+
+```bash
+sau tencent login --account <account_name>
+sau tencent check --account <account_name>
+sau tencent upload-video --account <account_name> --file videos/demo.mp4 --title "示例标题" --desc "示例简介" --tags 视频号,测试
+sau tencent upload-video --account <account_name> --file videos/demo.mp4 --title "示例标题" --desc "示例简介" --thumbnail videos/demo.png --short-title "短标题示例"
+```
+
+视频号当前只接入视频上传；图文发布代码还未完整实现，所以 CLI 暂不开放 `upload-note`。
+
 补充说明：
 
 - `creator` 之类的名字只是示例值，真正传的是用户自定义的 `account_name`
@@ -100,7 +113,7 @@ sau bilibili upload-video --account <account_name> --file videos/demo.mp4 --titl
 
 ## 定时发布
 
-抖音、快手、小红书的图文和视频上传，以及 Bilibili 的视频上传都支持 `--schedule`。只要传了 `--schedule`，CLI 就会自动切换到对应平台的定时发布策略；不传则默认立即发布。
+抖音、快手、小红书的图文和视频上传，以及 Bilibili、视频号的视频上传都支持 `--schedule`。只要传了 `--schedule`，CLI 就会自动切换到对应平台的定时发布策略；不传则默认立即发布。
 
 ```bash
 sau douyin upload-video --account <account_name> --file videos/demo.mp4 --title "示例标题" --desc "示例简介" --schedule "2026-03-24 21:30"
@@ -110,6 +123,7 @@ sau kuaishou upload-note --account <account_name> --images videos/1.png videos/2
 sau xiaohongshu upload-video --account <account_name> --file videos/demo.mp4 --title "示例标题" --desc "示例简介" --schedule "2026-03-24 21:30"
 sau xiaohongshu upload-note --account <account_name> --images videos/1.png videos/2.png videos/3.png --title "图文标题" --note "图文示例" --schedule "2026-03-24 21:30"
 sau bilibili upload-video --account <account_name> --file videos/demo.mp4 --title "示例标题" --desc "示例简介" --tid 249 --schedule "2026-03-24 21:30"
+sau tencent upload-video --account <account_name> --file videos/demo.mp4 --title "示例标题" --desc "示例简介" --schedule "2026-03-24 21:30"
 ```
 
 ## 运行时参数
@@ -159,6 +173,18 @@ Bilibili 额外要求：
 - `--tid` 第一版是必填
 - `--tags` 会映射到 `biliup upload --tag`
 - `--schedule` 会映射到 Bilibili 所需的时间戳参数
+
+视频号额外支持：
+
+```bash
+--short-title "短标题示例"
+--category "生活"
+--draft
+```
+
+- `--short-title` 会填写视频号短标题；不传时由标题自动截取
+- `--category` 用于原创声明里的原创类型，是否可用取决于当前账号页面实际展示
+- `--draft` 会保存草稿，不直接发表
 
 ## 图文上传参数
 

@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import PublisherWorkspace from '../views/PublisherWorkspace.vue'
 import Dashboard from '../views/Dashboard.vue'
 import AccountManagement from '../views/AccountManagement.vue'
 import MaterialManagement from '../views/MaterialManagement.vue'
@@ -8,6 +9,11 @@ import About from '../views/About.vue'
 const routes = [
   {
     path: '/',
+    name: 'PublisherWorkspace',
+    component: PublisherWorkspace
+  },
+  {
+    path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard
   },
